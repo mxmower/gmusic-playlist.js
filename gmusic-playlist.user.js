@@ -1070,27 +1070,29 @@ XHRTap.prototype = {
 
 /* wait for the UI to fully load and then insert the import/export controls */
 var addui = function() {
-    var ui = new XDoc(document);
-    var menu = ui.search('//div[@class="nav-section-divider"]')[0];
-    var inputui = ui.create('input',false,{'type':'file'});
-    var importui = ui.create(
-        'div',[ui.create('h4','Import Playlists'),inputui]);
-    var exportlink = ui.create('a','Export Playlists',{'href':'#exportCSV'});
-    var exportui = ui.create('div',ui.create('h4',exportlink));
-    var statusout = ui.create('h6','ready');
-    var statusui = ui.create('div',[statusout]);
-    stat.element = statusout;
-    var exporter = new Exporter();
-    exporter.listenTo(exportlink);
-    var importer = new Importer();
-    importer.listenTo(inputui);
-    if (menu) {
-        menu.appendChild(importui);
-        menu.appendChild(exportui);
-        menu.appendChild(statusui);
-    } else {
-        console.log('unable to locate menu element');
-    }
+    setTimeout(function(){
+        var ui = new XDoc(document);
+        var menu = ui.search('//div[@class="nav-section-divider"]')[0];
+        var inputui = ui.create('input',false,{'type':'file'});
+        var importui = ui.create(
+            'div',[ui.create('h4','Import Playlists'),inputui]);
+        var exportlink = ui.create('a','Export Playlists',{'href':'#exportCSV'});
+        var exportui = ui.create('div',ui.create('h4',exportlink));
+        var statusout = ui.create('h6','ready');
+        var statusui = ui.create('div',[statusout]);
+        stat.element = statusout;
+        var exporter = new Exporter();
+        exporter.listenTo(exportlink);
+        var importer = new Importer();
+        importer.listenTo(inputui);
+        if (menu) {
+            menu.appendChild(importui);
+            menu.appendChild(exportui);
+            menu.appendChild(statusui);
+        } else {
+            console.log('unable to locate menu element');
+        }
+    }, 3000);
 };
 window.addEventListener ("load", addui, false);
 
